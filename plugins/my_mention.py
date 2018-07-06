@@ -26,7 +26,6 @@ from linebot.models import (
 from message import * 
 from settings import * 
 from slack_webhook import *
-from IPython import embed
 
 line_bot_api = LineBotApi(channel_access_token)
 
@@ -56,7 +55,6 @@ def mention_func(message):
 
 @respond_to('おすすめ\n')
 def listen_func(message):
-	embed()
     to = message.body['text'].split('\n')[1]
     recommends = message.body['text'].split('\n')[2:]
     for recommend in  recommends:
