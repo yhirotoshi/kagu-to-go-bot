@@ -1,5 +1,6 @@
 import os
 import sys
+import subprocess
 
 from flask import Flask, request, abort
 import linebot
@@ -19,10 +20,12 @@ from settings import *
 from slack_webhook import *
 
 app = Flask(__name__)
+channel_secret='c44bcc1f07daafb3cb13ade4c4c1aeae'
+channel_access_token='mmPNqkrq4bCggaF4krhhp3rt8db3jyvpF+yOZCmmNHvflOW8taBpXR+QfPvh/8eqGbg09PULrIYidJjRGZmsb/6tX4wXIWu6XOZqD9yrs85Bf4A9ZmkTsxgFcYlTiqck89BwaE9U62kVGB7S8jNTZwdB04t89/1O/w1cDnyilFU='
+SLACK_WEBHOOK_URL='https://hooks.slack.com/services/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'
+SLACK_BOT_TOKEN='xoxb-393549495281-394265761810-dvUhS7oi8FSaeDufKTmKC9RX'
 
-print(channel_secret)
-print(channel_access_token)
-channel_access_token = '+NDrhB64UvIyD5jLS/M7+ebrdu4dClfhWnD+geE1k0hw6dDxpwGHz/XoD8LohJAI38Id7zWJoZFYb5IyOn2dMUGXr8dINH6277oV1z9OZjDCAGQbUTkCBySv3OHpHfMCjSfRDz+T6I+RDkIUTRszuAdB04t89/1O/w1cDnyilFU='
+# channel_access_token = '+NDrhB64UvIyD5jLS/M7+ebrdu4dClfhWnD+geE1k0hw6dDxpwGHz/XoD8LohJAI38Id7zWJoZFYb5IyOn2dMUGXr8dINH6277oV1z9OZjDCAGQbUTkCBySv3OHpHfMCjSfRDz+T6I+RDkIUTRszuAdB04t89/1O/w1cDnyilFU='
 if channel_secret is None:
     print('Specify LINE_CHANNEL_SECRET as environment variable.')
     sys.exit(1)
@@ -40,6 +43,7 @@ def hello_world():
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
+    print(channel_access_token)
     signature = request.headers['X-Line-Signature']
     # get request body as text
     body = request.get_data(as_text=True)
@@ -88,10 +92,10 @@ def handle_text_message(event):
 
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_image_message(event):
-    logging_user_image_upload(event)
     confirm_message = confirm_image_add_flex_style()
     logging_auto_response(event, confirm_message.alt_text)
     line_bot_api.reply_message(event.reply_token, confirm_message)
+    logging_user_image_upload(event) # 遅いので後ろに回す
 
 
 
