@@ -15,6 +15,7 @@ from linebot.models import (
     )
 
 from button_templates import *
+from settings import *
 from slack_webhook import *
 
 def kagu_select_carousel():
@@ -77,7 +78,7 @@ def price_select_flex_style():
     choice_list = ['1~3万円', '3~5万円','5~10万円','10万円~']
 
     button_choice = button_choice_generater(description=description, choice_list=choice_list)
-    message = FlexSendMessage(alt_text="お求めのサイズを教えてください", contents=button_choice)
+    message = FlexSendMessage(alt_text="ご希望の予算を教えてください", contents=button_choice)
     return message
 
 
