@@ -17,9 +17,9 @@ from linebot.models import (
     )
 
 from message import * 
-
-channel_secret = os.environ['LINE_CHANNEL_SECRET']
-channel_access_token = os.environ['LINE_CHANNEL_ACCESS_TOKEN']
+from settings import * 
+from slack_webhook import *
+channel_access_token = '+NDrhB64UvIyD5jLS/M7+ebrdu4dClfhWnD+geE1k0hw6dDxpwGHz/XoD8LohJAI38Id7zWJoZFYb5IyOn2dMUGXr8dINH6277oV1z9OZjDCAGQbUTkCBySv3OHpHfMCjSfRDz+T6I+RDkIUTRszuAdB04t89/1O/w1cDnyilFU='
 
 if channel_secret is None:
     print('Specify LINE_CHANNEL_SECRET as environment variable.')
@@ -29,7 +29,7 @@ if channel_access_token is None:
     sys.exit(1)
 
 
-line_bot_api = LineBotApi(channel_secret)
+line_bot_api = LineBotApi(channel_access_token)
 
 def kagu_select_conditions(event):
     if event.postback.data == 'ベッドを探す':

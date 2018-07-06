@@ -16,10 +16,13 @@ from linebot.models import (
 from message import * 
 from conditions import * 
 from settings import *
+from slack_webhook import *
 
 app = Flask(__name__)
 
-
+print(channel_secret)
+print(channel_access_token)
+channel_access_token = '+NDrhB64UvIyD5jLS/M7+ebrdu4dClfhWnD+geE1k0hw6dDxpwGHz/XoD8LohJAI38Id7zWJoZFYb5IyOn2dMUGXr8dINH6277oV1z9OZjDCAGQbUTkCBySv3OHpHfMCjSfRDz+T6I+RDkIUTRszuAdB04t89/1O/w1cDnyilFU='
 if channel_secret is None:
     print('Specify LINE_CHANNEL_SECRET as environment variable.')
     sys.exit(1)
@@ -27,8 +30,8 @@ if channel_access_token is None:
     print('Specify LINE_CHANNEL_ACCESS_TOKEN as environment variable.')
     sys.exit(1)
 
-line_bot_api = LineBotApi(channel_secret)
-handler = WebhookHandler(channel_access_token)
+line_bot_api = LineBotApi(channel_access_token)
+handler = WebhookHandler(channel_secret)
 
 @app.route("/")
 def hello_world():
@@ -45,6 +48,7 @@ def callback():
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:
+        print('signature error')
         abort(400)
 
     return 'OK'
@@ -86,7 +90,7 @@ def handle_text_message(event):
 def handle_image_message(event):
     logging_user_image_upload(event)
     confirm_message = confirm_image_add_flex_style()
-    logging_auto_response(event, message.alt_text)
+    logging_auto_response(event, confirm_message.alt_text)
     line_bot_api.reply_message(event.reply_token, confirm_message)
 
 
