@@ -13,10 +13,17 @@ from linebot.models import (
     ImageComponent, BoxComponent, TextComponent, IconComponent, SeparatorComponent, SpacerComponent,
     ButtonComponent,BubbleStyle, BlockStyle
     )
+channel_secret = os.environ['LINE_CHANNEL_SECRET']
+channel_access_token = os.environ['LINE_CHANNEL_ACCESS_TOKEN']
+
+channel_access_token = 'aec0ae44aedfcc002a994df46c564b05'
+channel_secret = 'OsceYLJIBukip2dP+asK42Osd3FZ5WK7kQ3zZbC6bACnXPTs9AvZeHgqmb7R8D2f38Id7zWJoZFYb5IyOn2dMUGXr8dINH6277oV1z9OZjAoJVlep4yffQjn4IpSKsb9AFhILkKbl1KnNIjMU8HsHwdB04t89/1O/w1cDnyilFU='
+line_bot_api = LineBotApi(channel_secret)
 
 WEB_HOOK_URL = os.environ['SLACK_URL']
 
-def send_chat(event):
+WEB_HOOK_URL = ''
+def logging_chat(event):
     requests.post(WEB_HOOK_URL, data = json.dumps(
         {
         "text": event.message.text + '\nfrom ' + event.source.userId,
@@ -27,7 +34,8 @@ def send_chat(event):
         )
     )
 
-def send_set_response(event, response)
+
+def logging_auto_response(event, response)
     requests.post(WEB_HOOK_URL, data = json.dumps(
         {
         "text": response + '\nto ' + event.source.userId,
@@ -38,7 +46,9 @@ def send_set_response(event, response)
         )
     )
 
-def send_auto_response(event, response)
+def logging_user_image_upload(event):
+    message_id = event.message.id
+    file = line_bot_api.get_message_content(message_id, )
     requests.post(WEB_HOOK_URL, data = json.dumps(
         {
         "text": response + '\nto ' + event.source.userId,
@@ -46,8 +56,13 @@ def send_auto_response(event, response)
         "username": event.source.userId,
         'link_names': 1, 
         }
-        )
+        ),
+    files=files
     )
-
-def send_push_response(response):
-    
+'''
+https://api.line.me/v2/bot/message/{messageId}/content
+'''
+# def logging_push_response(response):
+'''
+PUSH APiを使うときに使う
+'''
