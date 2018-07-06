@@ -1,4 +1,5 @@
 from flask import Flask, request, abort
+import requests, json 
 import linebot
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
@@ -14,8 +15,7 @@ from linebot.models import (
     )
 
 from button_templates import *
-
-
+from slack_webhook import *
 
 def kagu_select_carousel():
     image_action_list = [

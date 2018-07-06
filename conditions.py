@@ -53,7 +53,7 @@ def kagu_select_conditions(event):
             event.reply_token, template_message)
 
     if event.postback.data == 'ざっくり相談する':
-        template_message = confirm_room_style()
+        template_message = room_style_select()
         line_bot_api.reply_message(
             event.reply_token, template_message)
 
