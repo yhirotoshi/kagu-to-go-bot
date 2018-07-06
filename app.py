@@ -15,12 +15,10 @@ from linebot.models import (
 
 from message import * 
 from conditions import * 
-
+from settings import *
 
 app = Flask(__name__)
 
-channel_secret = os.environ['LINE_CHANNEL_SECRET']
-channel_access_token = os.environ['LINE_CHANNEL_ACCESS_TOKEN']
 
 if channel_secret is None:
     print('Specify LINE_CHANNEL_SECRET as environment variable.')
@@ -86,7 +84,9 @@ def handle_text_message(event):
 
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_image_message(event):
+    logging_user_image_upload(event)
     confirm_message = confirm_image_add_flex_style()
+    logging_auto_response(event, message.alt_text)
     line_bot_api.reply_message(event.reply_token, confirm_message)
 
 

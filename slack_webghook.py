@@ -16,8 +16,6 @@ from linebot.models import (
 channel_secret = os.environ['LINE_CHANNEL_SECRET']
 channel_access_token = os.environ['LINE_CHANNEL_ACCESS_TOKEN']
 
-channel_access_token = 'aec0ae44aedfcc002a994df46c564b05'
-channel_secret = 'OsceYLJIBukip2dP+asK42Osd3FZ5WK7kQ3zZbC6bACnXPTs9AvZeHgqmb7R8D2f38Id7zWJoZFYb5IyOn2dMUGXr8dINH6277oV1z9OZjAoJVlep4yffQjn4IpSKsb9AFhILkKbl1KnNIjMU8HsHwdB04t89/1O/w1cDnyilFU='
 line_bot_api = LineBotApi(channel_secret)
 
 WEB_HOOK_URL = os.environ['SLACK_URL']
