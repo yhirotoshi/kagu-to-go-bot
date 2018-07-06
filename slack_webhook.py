@@ -15,7 +15,7 @@ from linebot.models import (
     )
 from settings import *
 channel_access_token = '+NDrhB64UvIyD5jLS/M7+ebrdu4dClfhWnD+geE1k0hw6dDxpwGHz/XoD8LohJAI38Id7zWJoZFYb5IyOn2dMUGXr8dINH6277oV1z9OZjDCAGQbUTkCBySv3OHpHfMCjSfRDz+T6I+RDkIUTRszuAdB04t89/1O/w1cDnyilFU='
-
+SLACK_BOT_TOKEN="xoxb-393549495281-394265761810-dvUhS7oi8FSaeDufKTmKC9RX"
 line_bot_api = LineBotApi(channel_access_token)
 
 
@@ -49,13 +49,13 @@ def logging_auto_response(event, response):
 
 def logging_user_image_upload(event):
     message_id = event.message.id
-    print(type(line_bot_api.get_message_content(message_id)).content)
+    print(SLACK_BOT_TOKEN)
     param = {
     'token':SLACK_BOT_TOKEN, 
     'channels':'CBL74MZA9',
-    'filename':"image",
-    'initial_comment': "initial_comment",
-    'title': "title"
+    'filename':event.source.user_id,
+    'initial_comment': "部屋のイメージ uploaded by " + event.source.user_id,
+    'title': "部屋のイメージ"
     }
 
     files = {'file': line_bot_api.get_message_content(message_id).content}

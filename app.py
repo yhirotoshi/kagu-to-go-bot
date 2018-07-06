@@ -1,5 +1,6 @@
 import os
 import sys
+import subprocess
 
 from flask import Flask, request, abort
 import linebot
@@ -20,8 +21,7 @@ from slack_webhook import *
 
 app = Flask(__name__)
 
-print(channel_secret)
-print(channel_access_token)
+print('bot完了')
 channel_access_token = '+NDrhB64UvIyD5jLS/M7+ebrdu4dClfhWnD+geE1k0hw6dDxpwGHz/XoD8LohJAI38Id7zWJoZFYb5IyOn2dMUGXr8dINH6277oV1z9OZjDCAGQbUTkCBySv3OHpHfMCjSfRDz+T6I+RDkIUTRszuAdB04t89/1O/w1cDnyilFU='
 if channel_secret is None:
     print('Specify LINE_CHANNEL_SECRET as environment variable.')
@@ -88,10 +88,10 @@ def handle_text_message(event):
 
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_image_message(event):
-    logging_user_image_upload(event)
     confirm_message = confirm_image_add_flex_style()
     logging_auto_response(event, confirm_message.alt_text)
     line_bot_api.reply_message(event.reply_token, confirm_message)
+    logging_user_image_upload(event) # 遅いので後ろに回す
 
 
 

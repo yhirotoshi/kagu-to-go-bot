@@ -15,7 +15,7 @@ from linebot.models import (
 
 from button_templates import *
 from settings import *
-from slack_webhook import *
+
 
 def kagu_select_carousel():
     image_action_list = [
@@ -59,8 +59,6 @@ def diningtable_size_check_flex_style():
     button_choice = button_choice_generater(description=description, choice_list=choice_list)
     message = FlexSendMessage(alt_text="お求めのサイズを教えてください", contents=button_choice)
     return message
-    message = FlexSendMessage(alt_text="お求めのサイズを教えてください", contents=bubble)
-    return message
 
 
 def sofa_size_check_flex_style():
@@ -95,7 +93,7 @@ def confirm_room_style_flex_style():
     choice_list = ['選択肢から選ぶ', '部屋の写真がある', '家具のイメージ写真がある','特にない']
 
     button_choice = button_choice_generater(description=description, choice_list=choice_list, layout='1x')
-    message = FlexSendMessage(alt_text="お求めのサイズを教えてください", contents=button_choice)
+    message = FlexSendMessage(alt_text="お部屋や家具のイメージはありますか", contents=button_choice)
     return message
 
 
@@ -104,7 +102,7 @@ def confirm_image_add_flex_style():
     choice_list = ['まだある', 'もう大丈夫',]
 
     button_choice = button_choice_generater(description=description, choice_list=choice_list)
-    message = FlexSendMessage(alt_text="お求めのサイズを教えてください", contents=button_choice)
+    message = FlexSendMessage(alt_text="他に画像はございますか？", contents=button_choice)
     return message
 
 
