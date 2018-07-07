@@ -34,17 +34,16 @@ def _get_channel_id_from_list(user_id):
             return None
 
 def get_channel_id(user_id):
-    if channels['ok']:
+    channel_id = _get_channel_id_from_list(channels)
+    if channel_id:
+        return channel_id
+    else: 
+    # なかったら作ってからもう一回取得する
+    # TODO 作るのに失敗してる時の処理を書いていない
+        client.api_call("channels.create", name=user_id)
+        client.api_call("channels.create", channel=user_id, user='reply_deliver')
         channel_id = _get_channel_id_from_list(channels)
-        if channel_id:
-            return channel_id
-        else: 
-        # なかったら作ってからもう一回取得する
-        # TODO 作るのに失敗してる時の処理を書いていない
-            client.api_call("channels.create", name=user_id)
-            client.api_call("channels.create", channel=user_id, user='reply_deliver')
-            channel_id = _get_channel_id_from_list(channels)
-            return channel_id
+        return channel_id
 
 def logging_chat(event):
     if isinstance(event, PostbackEvent):
