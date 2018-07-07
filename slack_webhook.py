@@ -22,9 +22,6 @@ SLACK_WEBHOOK_URL='https://hooks.slack.com/services/TBKG5EK89/BBKRCLCP6/TEtw9zcc
 SLACK_BOT_TOKEN='xoxb-393549495281-394265761810-dvUhS7oi8FSaeDufKTmKC9RX'
 line_bot_api = LineBotApi(channel_access_token)
 
-過去に接客したか調べる
-接客してたらそのチャンネルIDを返す
-なかったら作ってBOtを招待する
 
 client = SlackClient(SLACK_BOT_TOKEN)
 
