@@ -25,7 +25,7 @@ line_bot_api = LineBotApi(channel_access_token)
 
 client = SlackClient(SLACK_BOT_TOKEN)
 
-def _get_channel_id_from_list(user_id):
+def _get_channel_id_from_list(user_id, channels):
     channels = client.api_call("channels.list")
     for channel in channels['channels']:
         if user_id == channel['name']:
@@ -34,7 +34,7 @@ def _get_channel_id_from_list(user_id):
             return None
 
 def get_channel_id(user_id):
-    channel_id = _get_channel_id_from_list(channels)
+    channel_id = _get_channel_id_from_list(user_id, channels)
     if channel_id:
         return channel_id
     else: 
