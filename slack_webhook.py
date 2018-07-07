@@ -20,10 +20,11 @@ channel_secret='c44bcc1f07daafb3cb13ade4c4c1aeae'
 channel_access_token='mmPNqkrq4bCggaF4krhhp3rt8db3jyvpF+yOZCmmNHvflOW8taBpXR+QfPvh/8eqGbg09PULrIYidJjRGZmsb/6tX4wXIWu6XOZqD9yrs85Bf4A9ZmkTsxgFcYlTiqck89BwaE9U62kVGB7S8jNTZwdB04t89/1O/w1cDnyilFU='
 SLACK_WEBHOOK_URL='https://hooks.slack.com/services/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'
 SLACK_BOT_TOKEN='xoxb-393549495281-394265761810-dvUhS7oi8FSaeDufKTmKC9RX'
+SLACK_API_TOKEN'xoxp-393549495281-395175381046-393980008145-3ada525694e6c63525967cb0398f3f19'
 line_bot_api = LineBotApi(channel_access_token)
 
 
-client = SlackClient(SLACK_BOT_TOKEN)
+client = SlackClient(SLACK_API_TOKEN)
 
 def _get_channel_id_from_list(user_id):
     channels = client.api_call("channels.list")
