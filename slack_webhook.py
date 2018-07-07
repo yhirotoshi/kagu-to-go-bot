@@ -35,6 +35,7 @@ def _get_channel_id_from_list(user_id):
             return None
 
 def get_channel_id(user_id):
+    user_id = user_id[0:20].lower()
     channel_id = _get_channel_id_from_list(user_id)
     if channel_id:
         return channel_id
@@ -53,7 +54,7 @@ def logging_chat(event):
         message = event.postback.data
     else :
         message = event.message.text
-    channel_id = get_channel_id(event.source.user_id[0:20])
+    channel_id = get_channel_id(event.source.user_id)
     client.api_call(
       "chat.postMessage",
       channel=channel_id,
