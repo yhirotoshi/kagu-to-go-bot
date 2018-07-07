@@ -1,5 +1,7 @@
 from flask import Flask, request, abort
 import requests, json 
+from slackclient import SlackClient
+import pandas as pd
 import linebot
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
@@ -20,21 +22,41 @@ SLACK_WEBHOOK_URL='https://hooks.slack.com/services/TBKG5EK89/BBKRCLCP6/TEtw9zcc
 SLACK_BOT_TOKEN='xoxb-393549495281-394265761810-dvUhS7oi8FSaeDufKTmKC9RX'
 line_bot_api = LineBotApi(channel_access_token)
 
+過去に接客したか調べる
+接客してたらそのチャンネルIDを返す
+なかったら作ってBOtを招待する
 
+client = SlackClient(SLACK_BOT_TOKEN)
+
+def _get_channel_id_from_list(channels):
+    for channel in channels['channels']:
+        if user_id == channel['name']:
+            return channel['id']
+        else:
+            return None
+
+def get_channel_id(user_id):
+    channels = client.api_call("channels.list")
+    if channels['ok']:
+        channel_id = _get_channel_id_from_list(channels)
+        if channel_id:
+            return channel_id
+        else: # なかったら作ってからもう一回取得する
+            client.api_call("channels.create", name=user_id)
+            client.api_call("channels.create", channel=user_id, user='reply_deliver')
+            channel_id = _get_channel_id_from_list(channels)
+            return channel_id
 
 def logging_chat(event):
     if isinstance(event, PostbackEvent):
         message = event.postback.data
     else :
         message = event.message.text
-    requests.post(WEB_HOOK_URL, data = json.dumps(
-        {
-        "text": message + '\nfrom ' + event.source.user_id,
-        # "channel": "#incoming-test",
-        "username": event.source.user_id,
-        'link_names': 1, 
-        }
-        )
+    channel_id = get_channel_id(event.source.user_id)
+    client.api_call(
+      "chat.postMessage",
+      channel=channel_id,
+      text=message
     )
 
 
@@ -51,7 +73,6 @@ def logging_auto_response(event, response):
 
 def logging_user_image_upload(event):
     message_id = event.message.id
-    print(SLACK_BOT_TOKEN)
     param = {
     'token':SLACK_BOT_TOKEN, 
     'channels':'CBL74MZA9',

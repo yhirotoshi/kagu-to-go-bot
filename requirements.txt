@@ -4,3 +4,5 @@ line-bot-sdk==1.7.2
 numpy==1.13.3
 python-dotenv==0.8.2
 slackbot==0.5.3
+slackclient==1.2.1
+pandas==0.20.3
