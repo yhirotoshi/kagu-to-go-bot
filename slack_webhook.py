@@ -25,7 +25,8 @@ line_bot_api = LineBotApi(channel_access_token)
 
 client = SlackClient(SLACK_BOT_TOKEN)
 
-def _get_channel_id_from_list(channels):
+def _get_channel_id_from_list(user_id):
+    channels = client.api_call("channels.list")
     for channel in channels['channels']:
         if user_id == channel['name']:
             return channel['id']
@@ -33,12 +34,13 @@ def _get_channel_id_from_list(channels):
             return None
 
 def get_channel_id(user_id):
-    channels = client.api_call("channels.list")
     if channels['ok']:
         channel_id = _get_channel_id_from_list(channels)
         if channel_id:
             return channel_id
-        else: # なかったら作ってからもう一回取得する
+        else: 
+        # なかったら作ってからもう一回取得する
+        # TODO 作るのに失敗してる時の処理を書いていない
             client.api_call("channels.create", name=user_id)
             client.api_call("channels.create", channel=user_id, user='reply_deliver')
             channel_id = _get_channel_id_from_list(channels)
