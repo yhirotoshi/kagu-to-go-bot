@@ -59,9 +59,8 @@ def callback():
 @app.route("/push_reply", methods=['POST'])
 def push_reply():
     body = json.loads(request.get_data(as_text=True))
-    print(body)
     to = body['send_to']
-    text = body.text
+    text = body['text']
     line_bot_api.push_message(to, TextSendMessage(text=text))
 
 @handler.add(FollowEvent)
