@@ -46,7 +46,8 @@ def get_channel_id(user_id):
         print(client.api_call("channels.create", name=user_id,validate=True))
         print('作成完了')
         channel_id = _get_channel_id_from_list(user_id)
-        client.api_call("channels.invite", channel=user_id, user='reply_deliver')
+        for invite_user in ['reply_deliver', 'Tai', 'Haru']:
+            client.api_call("channels.invite", channel=user_id, user=invite_user)
         return channel_id
 
 def logging_chat(event):
