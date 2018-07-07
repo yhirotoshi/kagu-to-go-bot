@@ -41,7 +41,7 @@ def get_channel_id(user_id):
         print('新規ユーザ')
     # なかったら作ってからもう一回取得する
     # TODO 作るのに失敗してる時の処理を書いていない
-        client.api_call("channels.create", name=user_id,validate=True)
+        print(client.api_call("channels.create", name=user_id,validate=True))
         print('作成完了')
         channel_id = _get_channel_id_from_list(user_id)
         client.api_call("channels.invite", channel=user_id, user='reply_deliver')
