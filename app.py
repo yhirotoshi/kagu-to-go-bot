@@ -43,7 +43,6 @@ def hello_world():
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
-    print(channel_access_token)
     signature = request.headers['X-Line-Signature']
     # get request body as text
     body = request.get_data(as_text=True)
@@ -57,6 +56,9 @@ def callback():
 
     return 'OK'
   
+@app.route("/callback", methods=['POST'])
+def push_repy():
+
 # handler
 '''
 フロー

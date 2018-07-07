@@ -57,6 +57,7 @@ def mention_func(message):
 def listen_func(message):
     to = message.body['text'].split('\n')[1]
     recommends = message.body['text'].split('\n')[2:]
-    for recommend in  recommends:
+    for recommend in recommends:
+        recommend = recommend.replace('<','').replace('>','')
         line_bot_api.push_message(to, TextSendMessage(text=recommend))
     message.send(str(recommends) + '\nをおすすめしました') # メンション
