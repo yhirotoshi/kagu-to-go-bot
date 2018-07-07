@@ -56,14 +56,13 @@ def callback():
 
     return 'OK'
   
-@app.route("/callback", methods=['POST'])
-def push_repy():
+@app.route("/push_reply", methods=['POST'])
+def push_reply():
+    body = json.loads(request.get_data(as_text=True))
+    to = body['send_to']
+    text = body['text']
+    line_bot_api.push_message(to, TextSendMessage(text=text))
 
-# handler
-'''
-フロー
-TODO 後でまとめる
-'''
 @handler.add(FollowEvent)
 def handle_follow(event):
     template_message = kagu_select_carousel()
