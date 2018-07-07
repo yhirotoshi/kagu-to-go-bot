@@ -53,7 +53,7 @@ def logging_chat(event):
         message = event.postback.data
     else :
         message = event.message.text
-    channel_id = get_channel_id(event.source.user_id)
+    channel_id = get_channel_id(event.source.user_id[0:20])
     client.api_call(
       "chat.postMessage",
       channel=channel_id,
