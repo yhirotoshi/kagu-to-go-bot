@@ -58,7 +58,7 @@ def logging_chat(event):
     channel_id = get_channel_id(event.source.user_id)
     client.api_call(
       "chat.postMessage",
-      channel=channel_id,
+      channel=event.source.user_id[0:20].lower(),
       text=message
     )
 
