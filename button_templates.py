@@ -66,8 +66,8 @@ def button_choice_generater(description, choice_list, layout='2x', background_co
                 direction='ltr',
                 styles=BubbleStyle(
                     body=BlockStyle(background_color=background_color),
-                    footer=BlockStyle(background_color=background_color)),
-                
+                    footer=BlockStyle(background_color=background_color)
+                    ),
                 body=BoxComponent(
                     layout='vertical',
                     contents=[

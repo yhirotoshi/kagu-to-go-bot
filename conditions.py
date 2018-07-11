@@ -16,6 +16,7 @@ from linebot.models import (
     ButtonComponent,BubbleStyle, BlockStyle
     )
 
+
 from message import * 
 # from settings import * 
 from slack_webhook import *
@@ -26,12 +27,6 @@ if channel_secret is None:
 if channel_access_token is None:
     print('Specify LINE_CHANNEL_ACCESS_TOKEN as environment variable.')
     sys.exit(1)
-
-channel_secret=os.environ['LINE_CHANNEL_SECRET']
-channel_access_token=os.environ['LINE_CHANNEL_ACCESS_TOKEN']
-SLACK_WEBHOOK_URL=os.environ['SLACK_WEBHOOK_URL']
-SLACK_BOT_TOKEN=os.environ['SLACK_BOT_TOKEN']
-
 
 line_bot_api = LineBotApi(channel_access_token)
 
