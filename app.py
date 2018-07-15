@@ -13,12 +13,12 @@ from linebot.models import (
     MessageAction, URIAction, PostbackAction, DatetimePickerAction,
     CarouselColumn, ImageCarouselColumn, 
     )
+from IPython import embed
 
 from settings import *
 from message import * 
 from conditions import * 
 from slack_webhook import *
-
 app = Flask(__name__)
 if channel_secret is None:
     print('Specify LINE_CHANNEL_SECRET as environment variable.')
@@ -53,13 +53,16 @@ def callback():
 @app.route("/push_reply", methods=['POST'])
 def push_reply():
     body = json.loads(request.get_data(as_text=True))
-    to = body['send_to']
+    channel_id = body['channel_id']
+    user = list(session.query(User).filter(User.channel_id==channel_id))[0]
+    to = user.uid
     text = body['text']
     line_bot_api.push_message(to, TextSendMessage(text=text))
 
 @handler.add(FollowEvent)
 def handle_follow(event):
     template_message = kagu_select_carousel()
+    logging_auto_response(event, template_message.alt_text)
     line_bot_api.reply_message(
         event.reply_token, template_message)
 
@@ -92,7 +95,17 @@ def handle_image_message(event):
     line_bot_api.reply_message(event.reply_token, confirm_message)
     logging_user_image_upload(event) # 遅いので後ろに回す
 
+from slackeventsapi import SlackEventAdapter
+slack_events_adapter = SlackEventAdapter(SLACK_VERIFICATION_TOKEN, "/slack/events", app)
 
 
+# Create an event listener for "reaction_added" events and print the emoji name
+@slack_events_adapter.on("reaction_added")
+def reaction_added(event):
+  emoji = event.get("reaction")
+  print(emoji)
+
+
+# Start the server on port 3000
 if __name__ == "__main__":
-    app.run() 
+  app.run(port=5000)
