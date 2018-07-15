@@ -12,7 +12,8 @@ channel_access_token = os.environ.get('LINE_CHANNEL_ACCESS_TOKEN')
 WEB_HOOK_URL = os.environ.get('SLACK_WEBHOOK_URL')
 SLACK_BOT_TOKEN=os.environ.get('SLACK_BOT_TOKEN')
 SLACK_API_TOKEN=os.environ.get('SLACK_API_TOKEN')
-DB_URI=os.environ.get('DB_URI')
+DB_URI=os.environ.get('DATABASE_URL')
+
 
 ENGINE = create_engine(
     DB_URI,
@@ -30,4 +31,4 @@ session = scoped_session(
         )
 )
 
-Base = declarative_base()
+BASE = declarative_base()
